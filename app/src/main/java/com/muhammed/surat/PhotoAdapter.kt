@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.muhammed.surat.databinding.ItemPhotoBinding
 
 class PhotoAdapter(
@@ -25,13 +24,11 @@ class PhotoAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photoItem: PhotoModel, onPhotoClick: (PhotoModel) -> Unit) {
-            Glide.with(binding.root.context)
-                .load(photoItem.uri.toString())
-                .error(R.drawable.ic_launcher_background)
-                .into(binding.imageViewPhoto)
-
-            binding.root.setOnClickListener {
-                onPhotoClick(photoItem)
+            with(binding) {
+                imageViewPhoto.load(photoItem.uri)
+                root.onClick {
+                    onPhotoClick(photoItem)
+                }
             }
         }
     }

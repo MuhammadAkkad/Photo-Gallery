@@ -1,7 +1,11 @@
 package com.muhammed.surat
 
 import android.content.Context
+import android.net.Uri
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -25,5 +29,19 @@ fun String.formatDate(): String {
         } ?: this
     } catch (e: Exception) {
         this
+    }
+}
+
+fun ImageView.load(uri: Uri?) {
+    uri?.let {
+        Glide.with(this.context)
+            .load(it)
+            .into(this)
+    }
+}
+
+fun View.onClick(action: (View) -> Unit) {
+    this.setOnClickListener {
+        action.invoke(this)
     }
 }

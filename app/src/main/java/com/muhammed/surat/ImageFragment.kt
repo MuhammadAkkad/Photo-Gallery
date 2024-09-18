@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import com.muhammed.surat.databinding.FragmentImageBinding
 
 class ImageFragment : Fragment() {
@@ -25,23 +25,25 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val photo = arguments?.let { ImageFragmentArgs.fromBundle(it).imageUrl }
 
-        photo?.let {
-            Glide.with(this)
-                .load(it.uri)
-                .into(binding.image)
+        with(binding) {
+            image.apply {
+                load(photo?.uri)
+                onClick {
+                    metaDataView.isVisible = metaDataView.isVisible.not()
+                }
+            }
+
+            val metadata = mapOf(
+                "Name: " to photo?.name,
+                "Orientation: " to photo?.orientation,
+                "Date and Time: " to photo?.dateTime,
+                "Latitude, Longitude: " to photo?.latLong,
+                "Exposure Time: " to photo?.exposureTime,
+                "Camera Make: " to photo?.cameraMake,
+                "Camera Model: " to photo?.cameraModel
+            )
+            metaDataView.setMetadata(metadata)
         }
-
-        val metadata = mapOf(
-            "Name: " to photo?.name,
-            "Orientation: " to photo?.orientation,
-            "Date and Time: " to photo?.dateTime,
-            "Latitude, Longitude: " to photo?.latLong,
-            "Exposure Time: " to photo?.exposureTime,
-            "Camera Make: " to photo?.cameraMake,
-            "Camera Model: " to photo?.cameraModel
-        )
-        binding.metaDataView.setMetadata(metadata)
-
     }
 
     override fun onDestroyView() {
