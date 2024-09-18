@@ -15,7 +15,7 @@ fun Context.showMessage(text: String) {
 }
 
 fun String?.hyphenIfEmpty(): String {
-    return if (this.isNullOrEmpty() || this == "null") "-" else this
+    return if (this.isNullOrEmpty()) "-" else this
 }
 
 fun String.formatDate(): String {

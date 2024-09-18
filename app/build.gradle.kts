@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.androidx.navigation.safe.args.kotlin)
     id("org.jetbrains.kotlin.kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -29,6 +30,10 @@ android {
         }
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -38,7 +43,7 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs = listOf(
             "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xcontext-receivers" // Enable context receivers
+            "-Xcontext-receivers"
         )
     }
 
@@ -62,7 +67,8 @@ dependencies {
     implementation(libs.glide)
     kapt(libs.glide.compiler)
     implementation(libs.javapoet)
-
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

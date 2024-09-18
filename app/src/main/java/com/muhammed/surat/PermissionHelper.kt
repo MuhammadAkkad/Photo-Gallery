@@ -6,45 +6,54 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.scopes.FragmentScoped
+import javax.inject.Inject
 
-context(Fragment)
-class PermissionHelper {
-
-    private var requestPermissionLauncher = registerForActivityResult(
+@FragmentScoped
+class PermissionHelper @Inject constructor(
+    private val fragment: Fragment,
+    private val dialogHelper: DialogHelper
+) {
+    private var onGranted: (() -> Unit)? = null
+    private val requestPermissionLauncher = fragment.registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
             onGranted?.invoke()
         } else {
-            onDenied?.invoke()
+            showPermissionRationale()
         }
     }
-    private var dialogHelper: DialogHelper? = null
-    private var onGranted: (() -> Unit)? = null
-    private var onDenied: (() -> Unit)? = null
 
-    fun requestCameraPermission(onGranted: () -> Unit, onDenied: () -> Unit) {
-        this@PermissionHelper.onGranted = onGranted
-        this@PermissionHelper.onDenied = onDenied
-        when {
-            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                dialogHelper = DialogHelper("Camera Permission Needed",
-                    "We need camera access to capture photos. Please enable it in settings.",
-                    "Go to Settings",
-                    "Cancel",
-                    onPositiveButtonClick = {
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri = Uri.fromParts("package", requireActivity().packageName, null)
-                        intent.data = uri
-                        startActivity(intent)
-                    },
-                    onNegativeButtonClick = {
-                        requireContext().showMessage("Camera permission is needed to take photos.")
-                    })
-                dialogHelper?.showDialog()
-            }
+    fun requestCameraPermission(onGranted: () -> Unit) {
+        this.onGranted = onGranted
 
-            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        if (fragment.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            showPermissionRationale()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
+    }
+
+    private fun showPermissionRationale() {
+        dialogHelper.showDialog(
+            title = fragment.getString(R.string.camera_permission_needed),
+            message = fragment.getString(R.string.camera_permission_message),
+            positiveButtonText = fragment.getString(R.string.go_to_settings),
+            negativeButtonText = fragment.getString(R.string.cancel),
+            onPositiveButtonClick = { navigateToAppSettings() },
+            onNegativeButtonClick = { notifyPermissionNeeded() }
+        )
+    }
+
+    private fun navigateToAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", fragment.requireActivity().packageName, null)
+        }
+        fragment.startActivity(intent)
+    }
+
+    private fun notifyPermissionNeeded() {
+        fragment.requireContext().showMessage("Camera permission is needed to take photos.")
     }
 }

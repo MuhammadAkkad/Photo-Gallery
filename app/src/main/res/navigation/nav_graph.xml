@@ -24,7 +24,7 @@
         android:label="Image"
         tools:layout="@layout/fragment_image">
         <argument
-            android:name="imageUrl"
+            android:name="photo"
             app:argType="com.muhammed.surat.PhotoModel" />
         <action
             android:id="@+id/action_imageFragment_to_imageListFragment"

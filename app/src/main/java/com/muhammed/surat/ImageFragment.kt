@@ -7,11 +7,19 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.muhammed.surat.databinding.FragmentImageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ImageFragment : Fragment() {
 
     private var _binding: FragmentImageBinding? = null
     private val binding get() = _binding!!
+    private var photo: PhotoModel? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        photo = arguments?.let { ImageFragmentArgs.fromBundle(it).photo }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,9 +31,8 @@ class ImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val photo = arguments?.let { ImageFragmentArgs.fromBundle(it).imageUrl }
-
         with(binding) {
+
             image.apply {
                 load(photo?.uri)
                 onClick {

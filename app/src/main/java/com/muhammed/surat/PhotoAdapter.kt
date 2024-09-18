@@ -35,14 +35,7 @@ class PhotoAdapter(
 
     class PhotoDiffCallback : DiffUtil.ItemCallback<PhotoModel>() {
         override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
-            return oldItem.name == newItem.name &&
-                    oldItem.uri == newItem.uri &&
-                    oldItem.orientation == newItem.orientation &&
-                    oldItem.dateTime == newItem.dateTime &&
-                    oldItem.exposureTime == newItem.exposureTime &&
-                    oldItem.latLong == newItem.latLong &&
-                    oldItem.cameraMake == newItem.cameraMake &&
-                    oldItem.cameraModel == newItem.cameraModel
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {

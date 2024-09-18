@@ -1,34 +1,30 @@
 package com.muhammed.surat
 
 import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import javax.inject.Inject
+import dagger.hilt.android.scopes.FragmentScoped
 
-context(androidx.fragment.app.Fragment)
-class DialogHelper(
-    private val title: String,
-    private val message: String,
-    private val positiveButton: String,
-    private val negativeButton: String,
-    private val onPositiveButtonClick: () -> Unit,
-    private val onNegativeButtonClick: () -> Unit
+@FragmentScoped
+class DialogHelper @Inject constructor(
+    private val fragment: Fragment
 ) {
-
-     fun showDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(positiveButton) { _, _ ->
-                onPositiveButtonClick()
-            }
-            .setNegativeButton(negativeButton) { dialog, _ ->
+    fun showDialog(
+        title: String,
+        message: String,
+        positiveButtonText: String,
+        negativeButtonText: String,
+        onPositiveButtonClick: () -> Unit,
+        onNegativeButtonClick: () -> Unit
+    ) {
+        AlertDialog.Builder(fragment.requireContext()).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton(positiveButtonText) { _, _ -> onPositiveButtonClick() }
+            setNegativeButton(negativeButtonText) { dialog, _ ->
                 onNegativeButtonClick()
                 dialog.dismiss()
             }
-            .create()
-            .show()
+        }.create().show()
     }
-
 }

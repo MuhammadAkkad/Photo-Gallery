@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Surat</string>
+    <string name="camera_permission_needed">Camera Permission Needed</string>
+    <string name="camera_permission_message">We need camera access to capture photos. Please enable it in settings.</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera_permission_needed_message">Camera permission is needed to take photos.</string>
+    <string name="error_creating_photo_uri">Error creating photo URI</string>
+
+    <string name="orientation_90">90 degrees rotated (Portrait)</string>
+    <string name="orientation_180">180 degrees rotated (Upside Down)</string>
+    <string name="orientation_270">270 degrees rotated (Landscape)</string>
+    <string name="orientation_normal">Normal (Landscape)</string>
+    <string name="orientation_unknown">Unknown orientation</string>
 </resources>
