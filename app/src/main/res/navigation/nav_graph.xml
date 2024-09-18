@@ -1,0 +1,37 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/imageListFragment">
+
+    <fragment
+        android:id="@+id/imageListFragment"
+        android:name="com.muhammed.surat.ImageListFragment"
+        android:label="Image List"
+        tools:layout="@layout/fragment_image_list">
+        <action
+            android:id="@+id/action_imageListFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.muhammed.surat.ImageFragment"
+        android:label="Image"
+        tools:layout="@layout/fragment_image">
+        <argument
+            android:name="imageUrl"
+            app:argType="com.muhammed.surat.PhotoModel" />
+        <action
+            android:id="@+id/action_imageFragment_to_imageListFragment"
+            app:destination="@id/imageListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+</navigation>
