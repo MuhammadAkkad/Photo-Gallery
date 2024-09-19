@@ -17,7 +17,7 @@ class DialogHelper @Inject constructor(
         onPositiveButtonClick: () -> Unit,
         onNegativeButtonClick: () -> Unit
     ) {
-        AlertDialog.Builder(fragment.requireContext()).apply {
+        AlertDialog.Builder(fragment.context).apply {
             setTitle(title)
             setMessage(message)
             setPositiveButton(positiveButtonText) { _, _ -> onPositiveButtonClick() }

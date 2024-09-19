@@ -12,6 +12,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import javax.inject.Inject
 
 @FragmentScoped
@@ -64,13 +65,10 @@ class CameraCaptureHelper @Inject constructor(
     }
 
     private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val timeStamp = SimpleDateFormat("dd_MMMM_yyyy HH:mm:ss.SSS", Locale.US).format(Date())
         val storageDir = fragment.context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "photo_${timeStamp}_",
-            ".jpg",
-            storageDir
-        )
+        val fileName = "photo_${timeStamp}.jpg"
+        return File(storageDir, fileName)
     }
 
     private fun getPhotoMetadata(photoUri: Uri?): PhotoModel? {

@@ -54,6 +54,6 @@ class PermissionHelper @Inject constructor(
     }
 
     private fun notifyPermissionNeeded() {
-        fragment.requireContext().showMessage("Camera permission is needed to take photos.")
+        fragment.context?.showMessage("Camera permission is needed to take photos.")
     }
 }
