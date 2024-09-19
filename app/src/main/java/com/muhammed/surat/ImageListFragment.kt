@@ -66,27 +66,33 @@ class ImageListFragment : Fragment() {
     }
 
     private fun setupListeners() {
-
-
-        binding.btnTakePicture.onClick {
-            cameraCaptureHelper.takePhoto(
-                onCaptured = {
-                    it?.let { photoMeta ->
-                        viewModel.addPhoto(photoMeta)
+        with(binding) {
+            btnTakePicture.onClick {
+                cameraCaptureHelper.takePhoto(
+                    onCaptured = {
+                        it?.let { photoMeta ->
+                            viewModel.addPhoto(photoMeta)
+                        }
+                    },
+                    onError = {
+                        context?.showMessage(getString(R.string.error_creating_photo))
                     }
-                },
-                onError = {
-                    context?.showMessage(getString(R.string.error_creating_photo))
+                )
+            }
+
+            dateComponent.apply {
+                onDateSelected {
+                    adapter.filter.filter(null)
                 }
-            )
-        }
 
-        binding.dateComponent.onDateSelected {
-            adapter.filter.filter(null)
-        }
+                onQueryEntered {
+                    adapter.filter.filter(it)
+                }
 
-        binding.dateComponent.onQueryEntered {
-            adapter.filter.filter(it)
+                doOnSortTypeChosen {
+                    viewModel.sortPhotos(it)
+                }
+            }
         }
     }
 

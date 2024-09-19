@@ -3,7 +3,6 @@ package com.muhammed.surat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,20 +19,35 @@ class ImageListViewModel @Inject constructor(
     val photos: StateFlow<List<PhotoModel>?> get() = _photos
 
     init {
-        loadAllPhotos()
+        getPhotosSortedByName()
     }
 
-    private fun loadAllPhotos() {
-        viewModelScope.launch {
-            repository.getAllPhotos().collectLatest { photosList ->
-                _photos.value = photosList
-            }
+    fun sortPhotos(type: SortType) {
+        when (type) {
+            SortType.NAME -> getPhotosSortedByName()
+            SortType.DATE -> getPhotosSortedByDate()
         }
     }
 
     fun addPhoto(photo: PhotoModel) {
         viewModelScope.launch {
             repository.insertPhoto(photo)
+        }
+    }
+
+    private fun getPhotosSortedByName() {
+        viewModelScope.launch {
+            repository.getPhotosSortedByName().collectLatest { photosList ->
+                _photos.value = photosList
+            }
+        }
+    }
+
+    private fun getPhotosSortedByDate() {
+        viewModelScope.launch {
+            repository.getPhotosSortedByDate().collectLatest { photosList ->
+                _photos.value = photosList
+            }
         }
     }
 }

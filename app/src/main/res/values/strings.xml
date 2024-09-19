@@ -22,4 +22,7 @@
     <string name="filter_by">filter by:</string>
     <string name="date_range">date range</string>
     <string name="keyword">keyword</string>
+    <string name="sort_by">sort by:</string>
+    <string name="name">name</string>
+    <string name="date">date</string>
 </resources>

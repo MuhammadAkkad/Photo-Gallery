@@ -6,9 +6,9 @@ import javax.inject.Inject
 class PhotoRepository @Inject constructor(
     private val photoDao: PhotoDao
 ) {
-    fun getAllPhotos(): Flow<List<PhotoModel>> = photoDao.getAllPhotos()
 
-    suspend fun insertPhoto(photo: PhotoModel) {
-        photoDao.insertPhoto(photo)
-    }
+    fun getPhotosSortedByName(): Flow<List<PhotoModel>> = photoDao.getPhotosSortedByName()
+    fun getPhotosSortedByDate(): Flow<List<PhotoModel>> = photoDao.getPhotosSortedByDate()
+
+    suspend fun insertPhoto(photo: PhotoModel) { photoDao.insertPhoto(photo) }
 }

@@ -13,6 +13,10 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+enum class SortType {
+    DATE, NAME
+}
+
 class DateComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -21,6 +25,7 @@ class DateComponent @JvmOverloads constructor(
 
     private var onDateSelected: ((Pair<Date?, Date?>) -> Unit)? = null
     private var onQueryEntered: ((String?) -> Unit)? = null
+    private var onSortTypeChosen: ((SortType) -> Unit)? = null
 
     private var mBinding: DateComponentViewBinding? = null
         get() {
@@ -38,6 +43,11 @@ class DateComponent @JvmOverloads constructor(
     init {
         initListeners()
         binding.rbKeyword.performClick()
+        binding.rbSortByName.performClick()
+    }
+
+    fun doOnSortTypeChosen(onSortTypeChosen: ((SortType) -> Unit)) {
+        this.onSortTypeChosen = onSortTypeChosen
     }
 
     fun onDateSelected(onDateSelected: (Pair<Date?, Date?>) -> Unit) {
@@ -93,6 +103,16 @@ class DateComponent @JvmOverloads constructor(
                 endDateEditText.text?.clear()
                 triggerFiltering()
             }
+
+            rbSortByName.onClick {
+                rbSortByDate.isChecked = false
+                onSortTypeChosen?.invoke(SortType.NAME)
+            }
+
+            rbSortByDate.onClick {
+                rbSortByName.isChecked = false
+                onSortTypeChosen?.invoke(SortType.DATE)
+            }
         }
     }
 
@@ -124,7 +144,7 @@ class DateComponent @JvmOverloads constructor(
             binding.startDateEditText.text.toString().takeIf { it.isEmpty().not() }?.toDate()
         val endDate =
             binding.endDateEditText.text.toString().takeIf { it.isEmpty().not() }?.toDate()
-            onDateSelected?.invoke(Pair(startDate, endDate))
+        onDateSelected?.invoke(Pair(startDate, endDate))
     }
 
     fun getDateRange(): Pair<Date?, Date?> {

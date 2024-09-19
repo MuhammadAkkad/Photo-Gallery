@@ -18,11 +18,6 @@ class PhotoAdapter(
 
     private var originalList: List<PhotoModel> = emptyList()
 
-    fun setItems(list: List<PhotoModel>) {
-        originalList = list
-        submitList(list)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PhotoViewHolder(binding)
@@ -37,26 +32,16 @@ class PhotoAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val query = constraint?.toString()?.trim()
                 val filterResults = FilterResults()
-
-                val dateRange = getDateRange()
-                val startDate = dateRange?.first
-                val endDate = dateRange?.second
+                val (startDate, endDate) = getDateRange() ?: Pair(null, null)
 
                 filterResults.values = originalList.filter { photo ->
                     val photoDate = photo.dateTime?.toDate()
-
                     val matchesDate =
-                        startDate != null && endDate != null && photoDate != null &&
-                                photoDate in (startDate..endDate)
-
+                        startDate != null && endDate != null && photoDate!! in (startDate..endDate)
                     val matchesQuery =
                         query.isNullOrEmpty() || photo.name.contains(query, ignoreCase = true)
 
-                    if (startDate != null && endDate != null) {
-                        matchesDate
-                    } else {
-                        matchesQuery
-                    }
+                    (startDate != null && endDate != null && matchesDate) || matchesQuery
                 }
 
                 return filterResults
@@ -66,6 +51,11 @@ class PhotoAdapter(
                 submitList(results?.values as List<PhotoModel>?)
             }
         }
+    }
+
+    fun setItems(list: List<PhotoModel>) {
+        originalList = list
+        submitList(list)
     }
 
     class PhotoViewHolder(private val binding: ItemPhotoBinding) :

@@ -65,7 +65,7 @@ class CameraCaptureHelper @Inject constructor(
     }
 
     private fun createImageFile(): File {
-        val timeStamp = SimpleDateFormat("dd_MMMM_yyyy HH:mm:ss.SSS", Locale.US).format(Date())
+        val timeStamp = UUID.randomUUID()
         val storageDir = fragment.context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val fileName = "photo_${timeStamp}.jpg"
         return File(storageDir, fileName)

@@ -11,6 +11,9 @@ interface PhotoDao {
     @Insert
     suspend fun insertPhoto(photo: PhotoModel)
 
-    @Query("SELECT * FROM photos")
-    fun getAllPhotos(): Flow<List<PhotoModel>>
+    @Query("SELECT * FROM photos ORDER BY name ASC")
+    fun getPhotosSortedByName(): Flow<List<PhotoModel>>
+
+    @Query("SELECT * FROM photos ORDER BY dateTime ASC")
+    fun getPhotosSortedByDate(): Flow<List<PhotoModel>>
 }
