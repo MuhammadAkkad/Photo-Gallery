@@ -1,4 +1,4 @@
-package com.muhammed.surat
+package com.muhammed.surat.data.database
 
 import android.net.Uri
 import androidx.room.TypeConverter

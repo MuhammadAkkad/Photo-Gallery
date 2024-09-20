@@ -1,4 +1,4 @@
-package com.muhammed.surat
+package com.muhammed.surat.presentation.common.helper
 
 import android.Manifest
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.muhammed.surat.R
+import com.muhammed.surat.util.showMessage
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 

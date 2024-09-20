@@ -1,16 +1,17 @@
-package com.muhammed.surat
+package com.muhammed.surat.util
 
 import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -32,19 +33,6 @@ fun String?.hyphenIfEmpty(): String {
     return if (this.isNullOrEmpty()) "-" else this
 }
 
-fun String.formatDate(): String {
-    val inputFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-
-    return try {
-        val date = inputFormat.parse(this)
-        date?.let {
-            outputFormat.format(date)
-        } ?: this
-    } catch (e: Exception) {
-        this
-    }
-}
 // TODO: extract date patters to constants file.
 fun String.toDate(): Date? {
     val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
@@ -72,10 +60,8 @@ fun View.onClick(action: (View) -> Unit) {
 context(Fragment)
 fun <T> Flow<T>.collectFlow(action: (T) -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
             collectLatest {
                 action(it)
-            }
         }
     }
 }
@@ -97,5 +83,19 @@ fun TextInputEditText.onTextEntered(action: (String) -> Unit) {
             delay(350)
             action(it.toString())
         }
+    }
+}
+
+fun Fragment.toggleFullScreen(isFullScreen: Boolean) {
+    val window = requireActivity().window
+    val controller = WindowInsetsControllerCompat(window, window.decorView)
+
+    if (isFullScreen) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+    } else {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        controller.show(WindowInsetsCompat.Type.systemBars())
     }
 }

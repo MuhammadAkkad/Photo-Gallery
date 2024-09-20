@@ -1,4 +1,4 @@
-package com.muhammed.surat
+package com.muhammed.surat.data.model
 
 import android.net.Uri
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "photos")
 data class PhotoModel(
-    @PrimaryKey val id: Long,
+    @PrimaryKey val id: String,
     val name: String,
     val uri: Uri?,
     val orientation: String?,

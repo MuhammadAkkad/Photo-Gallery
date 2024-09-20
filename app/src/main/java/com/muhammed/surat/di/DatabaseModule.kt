@@ -1,12 +1,14 @@
-package com.muhammed.surat
+package com.muhammed.surat.di
 
 import android.content.Context
 import androidx.room.Room
+import com.muhammed.surat.data.dao.PhotoDao
+import com.muhammed.surat.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module

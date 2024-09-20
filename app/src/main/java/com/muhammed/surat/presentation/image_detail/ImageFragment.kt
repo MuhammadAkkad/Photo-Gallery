@@ -1,4 +1,4 @@
-package com.muhammed.surat
+package com.muhammed.surat.presentation.image_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.muhammed.surat.data.model.PhotoModel
 import com.muhammed.surat.databinding.FragmentImageBinding
+import com.muhammed.surat.util.load
+import com.muhammed.surat.util.onClick
+import com.muhammed.surat.util.toggleFullScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,29 +37,36 @@ class ImageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-
-            image.apply {
-                load(photo?.uri)
-                onClick {
-                    metaDataView.isVisible = metaDataView.isVisible.not()
-                }
-            }
-
-            val metadata = mapOf(
-                "Name: " to photo?.name,
-                "Orientation: " to photo?.orientation,
-                "Date and Time: " to photo?.dateTime,
-                "Latitude, Longitude: " to photo?.latLong,
-                "Exposure Time: " to photo?.exposureTime,
-                "Camera Make: " to photo?.cameraMake,
-                "Camera Model: " to photo?.cameraModel
-            )
-            metaDataView.setMetadata(metadata)
+            initListeners()
+            metaDataView.setMetadata(photo)
+            image.load(photo?.uri)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        toggleFullScreen(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        toggleFullScreen(false)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            btnBack.onClick {
+                findNavController().navigateUp()
+            }
+            image.onClick {
+                metaDataView.isVisible = metaDataView.isVisible.not()
+                btnBack.isVisible = btnBack.isVisible.not()
+            }
+        }
     }
 }

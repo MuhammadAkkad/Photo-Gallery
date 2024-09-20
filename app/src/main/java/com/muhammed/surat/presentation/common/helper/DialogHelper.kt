@@ -1,9 +1,9 @@
-package com.muhammed.surat
+package com.muhammed.surat.presentation.common.helper
 
 import android.app.AlertDialog
 import androidx.fragment.app.Fragment
-import javax.inject.Inject
 import dagger.hilt.android.scopes.FragmentScoped
+import javax.inject.Inject
 
 @FragmentScoped
 class DialogHelper @Inject constructor(

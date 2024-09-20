@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:animateLayoutChanges="true"
     android:animationCache="true"
-    tools:context=".ImageFragment">
+    android:background="@color/black"
+    tools:context=".presentation.image_detail.ImageFragment">
 
     <ImageView
         android:id="@+id/image"
@@ -19,12 +19,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ImageFragment" />
+        tools:context=".presentation.image_detail.ImageFragment" />
 
-    <com.muhammed.surat.CustomMetadataView
+    <com.muhammed.surat.presentation.common.component.CustomMetadataView
         android:id="@+id/meta_data_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:importantForAccessibility="no"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="mini"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

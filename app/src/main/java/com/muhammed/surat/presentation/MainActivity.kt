@@ -1,9 +1,10 @@
-package com.muhammed.surat
+package com.muhammed.surat.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.muhammed.surat.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
