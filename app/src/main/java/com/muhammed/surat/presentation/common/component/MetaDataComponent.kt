@@ -7,23 +7,30 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.muhammed.surat.R
 import com.muhammed.surat.data.model.PhotoModel
+import com.muhammed.surat.databinding.MetaDataComponentViewBinding
 import com.muhammed.surat.util.hyphenIfEmpty
 
-class CustomMetadataView @JvmOverloads constructor(
+class MetaDataComponent @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private val metadataContainer: LinearLayout
+    private var _binding: MetaDataComponentViewBinding? = null
+        get() {
+            _binding = field ?: inflateBinding()
+            return field
+        }
 
-    init {
-        LayoutInflater.from(context).inflate(R.layout.custom_meta_data_view, this, true)
-        orientation = VERTICAL
-        metadataContainer = findViewById(R.id.metadataContainer)
+    private val binding: MetaDataComponentViewBinding
+        get() = _binding ?: throw IllegalStateException("Binding is not initialized")
+
+    private fun inflateBinding(): MetaDataComponentViewBinding {
+        return MetaDataComponentViewBinding.inflate(LayoutInflater.from(context), this)
     }
 
     fun setMetadata(photo: PhotoModel?) {
+
         val data = mapOf(
             "Name: " to photo?.name,
             "Orientation: " to photo?.orientation,
@@ -34,15 +41,15 @@ class CustomMetadataView @JvmOverloads constructor(
             "Camera Model: " to photo?.cameraModel
         )
 
-        metadataContainer.removeAllViews()
+        binding.metadataContainer.removeAllViews()
         data.forEach { (title, value) ->
             val view = LayoutInflater.from(context)
-                .inflate(R.layout.custom_meta_item_view, metadataContainer, false)
+                .inflate(R.layout.meta_data_item_view, binding.metadataContainer, false)
             val titleTextView: TextView = view.findViewById(R.id.title_text_view)
             val valueTextView: TextView = view.findViewById(R.id.value_text_view)
             titleTextView.text = title
             valueTextView.text = value.hyphenIfEmpty()
-            metadataContainer.addView(view)
+            binding.metadataContainer.addView(view)
         }
     }
 }

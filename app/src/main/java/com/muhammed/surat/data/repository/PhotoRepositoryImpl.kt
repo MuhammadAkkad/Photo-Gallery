@@ -10,11 +10,11 @@ class PhotoRepositoryImpl @Inject constructor(
     private val photoDao: PhotoDao
 ) : PhotoRepository {
 
-    override suspend fun getPhotos(): Flow<List<PhotoModel>> {
-        return photoDao.getPhotos()
-    }
-
     override suspend fun insertPhoto(photo: PhotoModel) {
         photoDao.insertPhoto(photo)
+    }
+
+    override suspend fun fetchPhotos(): Flow<List<PhotoModel>> {
+        return photoDao.fetchPhotos()
     }
 }

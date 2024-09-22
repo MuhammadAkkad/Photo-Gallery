@@ -15,10 +15,8 @@ import com.muhammed.surat.util.onClick
 import com.muhammed.surat.util.onSearch
 import com.muhammed.surat.util.onTextEntered
 import com.muhammed.surat.util.toDate
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 class HeaderComponent @JvmOverloads constructor(
     context: Context,
@@ -27,23 +25,15 @@ class HeaderComponent @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private var filterModel = FilterModel()
-
     private var onFilter: ((FilterModel) -> Unit)? = null
-
     private var onSort: ((SortType) -> Unit)? = null
-
-    private var mBinding: HeaderComponentViewBinding? = null
+    private var _binding: HeaderComponentViewBinding? = null
         get() {
-            mBinding = field ?: inflateBinding()
+            _binding = field ?: inflateBinding()
             return field
         }
-
     private val binding: HeaderComponentViewBinding
-        get() = mBinding ?: throw IllegalStateException("Binding is not initialized")
-
-    private fun inflateBinding(): HeaderComponentViewBinding {
-        return HeaderComponentViewBinding.inflate(LayoutInflater.from(context), this)
-    }
+        get() = _binding ?: throw IllegalStateException("Binding is not initialized")
 
     init {
         initListeners()
@@ -80,6 +70,10 @@ class HeaderComponent @JvmOverloads constructor(
         this.onSort = onSort
     }
 
+    private fun inflateBinding(): HeaderComponentViewBinding {
+        return HeaderComponentViewBinding.inflate(LayoutInflater.from(context), this)
+    }
+
     private fun initListeners() {
         with(binding) {
             searchEditText.onSearch { text ->
@@ -89,8 +83,7 @@ class HeaderComponent @JvmOverloads constructor(
             btnClear.onClick {
                 startDateEditText.text?.clear()
                 endDateEditText.text?.clear()
-                val pair = getDatePair()
-                onFilter?.invoke(filterModel.copy(dateRange = pair, query = null))
+                onFilter?.invoke(filterModel.copy(dateRange = null, query = null))
             }
 
             startDateEditText.onClick {

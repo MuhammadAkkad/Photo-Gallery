@@ -66,7 +66,6 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.glide)
     kapt(libs.glide.compiler)
-    implementation(libs.javapoet)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)

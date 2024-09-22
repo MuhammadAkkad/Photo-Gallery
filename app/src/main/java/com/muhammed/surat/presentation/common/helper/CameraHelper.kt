@@ -15,11 +15,7 @@ import dagger.hilt.android.scopes.FragmentScoped
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.text.SimpleDateFormat
-import java.time.temporal.ChronoUnit
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.random.Random
@@ -36,7 +32,7 @@ class CameraHelper @Inject constructor(
     private val takePictureLauncher =
         fragment.registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
-                val photoMetaData = getPhotoMetadata(photoUri)
+                val photoMetaData = getPhotoMetadata()
                 onCaptured?.invoke(photoMetaData)
             } else {
                 onError?.invoke()
@@ -70,13 +66,13 @@ class CameraHelper @Inject constructor(
                     imageFile
                 )
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             fragment.context?.showMessage(fragment.getString(R.string.error_creating_photo_uri))
             null
         }
     }
 
-    private fun getPhotoMetadata(photoUri: Uri?): PhotoModel? {
+    private fun getPhotoMetadata(): PhotoModel? {
         return photoUri?.let { uri ->
             var inputStream: InputStream? = null
             try {
@@ -113,11 +109,11 @@ class CameraHelper @Inject constructor(
         * */
 
         val startDate = Calendar.getInstance().apply {
-            set(2020, Calendar.JANUARY, 1)
+            set(2024, Calendar.AUGUST, 1)
         }
 
         val endDate = Calendar.getInstance().apply {
-            set(2024, Calendar.DECEMBER, 31)
+            set(2024, Calendar.SEPTEMBER, 30)
         }
 
         val startMillis = startDate.timeInMillis

@@ -53,7 +53,7 @@ class ImageListViewModel @Inject constructor(
 
     private fun fetchPhotos() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getPhotos().collectLatest { photosList ->
+            repository.fetchPhotos().collectLatest { photosList ->
                 val filteredList = filterList(photosList)
                 val sortedList = sortList(filteredList)
                 _photos.value = sortedList
