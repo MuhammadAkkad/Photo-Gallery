@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:animationCache="true"
     android:background="#F0F0F0"
     tools:context=".presentation.image_list.ImageListFragment">
 
@@ -34,9 +36,9 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
         android:fontFamily="@font/roboto"
-        app:cornerRadius="8dp"
         android:text="@string/take_a_picture"
         android:textAllCaps="false"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

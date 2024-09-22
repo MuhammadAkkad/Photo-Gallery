@@ -8,14 +8,21 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import com.muhammed.surat.R
 import com.muhammed.surat.data.model.PhotoModel
+import com.muhammed.surat.util.format
 import com.muhammed.surat.util.hyphenIfEmpty
 import com.muhammed.surat.util.showMessage
 import dagger.hilt.android.scopes.FragmentScoped
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.time.temporal.ChronoUnit
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.random.Random
 
 @FragmentScoped
 class CameraHelper @Inject constructor(
@@ -53,8 +60,8 @@ class CameraHelper @Inject constructor(
 
     private fun createPhotoUri(): Uri? {
         return try {
-            val timeStamp = System.currentTimeMillis()
-            val fileName = "photo_${timeStamp}.jpg"
+            val randomNumber = Random.nextInt(10000000, 100000000)
+            val fileName = "photo_${randomNumber}.jpg"
             val imageFile = File(storageDir, fileName)
             fragment.context?.let { context ->
                 FileProvider.getUriForFile(
@@ -81,7 +88,7 @@ class CameraHelper @Inject constructor(
                     name = File(path).name,
                     uri = photoUri,
                     orientation = getOrientationDescription(exif),
-                    dateTime = exif?.getAttribute(ExifInterface.TAG_DATETIME),
+                    dateTime = /*exif?.getAttribute(ExifInterface.TAG_DATETIME)*/ generateRandomDate(),
                     latLong = "${
                         exif?.getAttribute(ExifInterface.TAG_GPS_LATITUDE)?.hyphenIfEmpty()
                     }, ${exif?.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)?.hyphenIfEmpty()}",
@@ -98,6 +105,32 @@ class CameraHelper @Inject constructor(
             }
         }
     }
+
+    // region ignore
+    private fun generateRandomDate(): String? {
+        /* Do not take this method into consideration.
+        * I wrote it to make sort and filter functionality testing easier :)
+        * */
+
+        val startDate = Calendar.getInstance().apply {
+            set(2020, Calendar.JANUARY, 1)
+        }
+
+        val endDate = Calendar.getInstance().apply {
+            set(2024, Calendar.DECEMBER, 31)
+        }
+
+        val startMillis = startDate.timeInMillis
+        val endMillis = endDate.timeInMillis
+
+        val randomMillis = Random.nextLong(startMillis, endMillis)
+
+        val randomDate = Calendar.getInstance()
+        randomDate.timeInMillis = randomMillis
+
+        return randomDate.time.format()
+    }
+    //endregion
 
     private fun getOrientationDescription(exif: ExifInterface?): String {
         val orientation = exif?.getAttributeInt(

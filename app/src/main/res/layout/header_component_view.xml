@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:animationCache="true"
-        android:orientation="vertical"
-        android:paddingTop="8dp">
+        android:paddingTop="12dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_date_filter_container"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -24,11 +24,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/roboto"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
-                app:hintTextColor="@color/black">
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@id/endDateInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/startDateEditText"
@@ -44,11 +46,13 @@
                 android:id="@+id/endDateInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/roboto"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
-                app:hintTextColor="@color/black">
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@id/btn_clear"
+                app:layout_constraintStart_toEndOf="@id/startDateInputLayout"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/endDateEditText"
@@ -65,23 +69,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
-                android:fontFamily="@font/roboto"
                 android:importantForAccessibility="no"
                 app:backgroundTint="@color/colorAccent"
                 app:fabSize="mini"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_clear"
                 app:tint="@android:color/white" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/SearchTextInputLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:fontFamily="@font/roboto"
             android:hint="@string/search_hint"
-            app:hintAnimationEnabled="true">
+            app:hintAnimationEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_date_filter_container">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchEditText"
@@ -95,28 +102,34 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             android:paddingHorizontal="8dp"
-            android:paddingTop="8dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/SearchTextInputLayout">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filter_section"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                app:layout_constraintEnd_toStartOf="@id/sort_section"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tv_filter_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/filter_by"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_keyword"
@@ -124,7 +137,9 @@
                     android:layout_height="25dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/keyword"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_filter_by" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_date_range"
@@ -132,24 +147,31 @@
                     android:layout_height="25dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/date_range"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rb_keyword" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sort_section"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/filter_section"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tv_sort_by"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/sort_by"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_sort_by_name"
@@ -157,7 +179,9 @@
                     android:layout_height="25dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/name"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sort_by" />
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/rb_sort_by_date"
@@ -165,12 +189,14 @@
                     android:layout_height="25dp"
                     android:fontFamily="@font/roboto"
                     android:text="@string/date"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rb_sort_by_name" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>

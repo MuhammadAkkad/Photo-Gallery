@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.muhammed.surat.data.enums.SortType
 import com.muhammed.surat.data.model.FilterModel
 import com.muhammed.surat.databinding.HeaderComponentViewBinding
+import com.muhammed.surat.util.format
 import com.muhammed.surat.util.onClick
 import com.muhammed.surat.util.onSearch
 import com.muhammed.surat.util.onTextEntered
@@ -165,9 +166,7 @@ class HeaderComponent @JvmOverloads constructor(
                     set(Calendar.MONTH, selectedMonth)
                     set(Calendar.DAY_OF_MONTH, selectedDay)
                 }.time
-                val formattedDate =
-                    SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
-                editText.setText(formattedDate)
+                editText.setText(date.format())
             },
             year, month, day
         )

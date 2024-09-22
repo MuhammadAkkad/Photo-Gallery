@@ -33,14 +33,18 @@ fun String?.hyphenIfEmpty(): String {
     return if (this.isNullOrEmpty()) "-" else this
 }
 
-// TODO: extract date patters to constants file.
 fun String.toDate(): Date? {
-    val inputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    val inputFormat = SimpleDateFormat(SHORT_DATE_FORMAT, Locale.getDefault())
     return try {
         inputFormat.parse(this)
     } catch (e: Exception) {
         null
     }
+}
+
+fun Date.format(): String? {
+    val dateFormat = SimpleDateFormat(SHORT_DATE_FORMAT, Locale.getDefault())
+    return dateFormat.format(this.time)
 }
 
 fun ImageView.load(uri: Uri?) {
@@ -60,8 +64,8 @@ fun View.onClick(action: (View) -> Unit) {
 context(Fragment)
 fun <T> Flow<T>.collectFlow(action: (T) -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
-            collectLatest {
-                action(it)
+        collectLatest {
+            action(it)
         }
     }
 }
@@ -92,7 +96,8 @@ fun Fragment.toggleFullScreen(isFullScreen: Boolean) {
 
     if (isFullScreen) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         controller.hide(WindowInsetsCompat.Type.systemBars())
     } else {
         WindowCompat.setDecorFitsSystemWindows(window, true)
