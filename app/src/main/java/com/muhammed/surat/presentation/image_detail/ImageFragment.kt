@@ -24,7 +24,6 @@ class ImageFragment : BaseFragment<FragmentImageBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            initListeners()
             metaDataView.setMetadata(photo)
             image.load(photo?.uri)
         }
