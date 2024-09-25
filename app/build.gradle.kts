@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.muhammed.surat"
+    namespace = "com.muhammed.aras"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.muhammed.surat"
+        applicationId = "com.muhammed.aras"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

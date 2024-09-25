@@ -6,12 +6,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name=".SuratApp"
+        android:name=".ArasApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.Surat"
+        android:theme="@style/Theme.Aras"
         tools:targetApi="31">
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -9,7 +9,7 @@
     android:background="#F0F0F0"
     tools:context=".presentation.image_list.ImageListFragment">
 
-    <com.muhammed.surat.presentation.common.component.HeaderComponent
+    <com.muhammed.aras.presentation.common.component.HeaderComponent
         android:id="@+id/header_component"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

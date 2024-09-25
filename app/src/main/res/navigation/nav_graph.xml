@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/imageListFragment"
-        android:name="com.muhammed.surat.presentation.image_list.ImageListFragment"
+        android:name="com.muhammed.aras.presentation.image_list.ImageListFragment"
         android:label="Image List"
         tools:layout="@layout/fragment_image_list">
         <action
@@ -20,12 +20,12 @@
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="com.muhammed.surat.presentation.image_detail.ImageFragment"
+        android:name="com.muhammed.aras.presentation.image_detail.ImageFragment"
         android:label="Image"
         tools:layout="@layout/fragment_image">
         <argument
             android:name="photo"
-            app:argType="com.muhammed.surat.data.model.PhotoModel" />
+            app:argType="com.muhammed.aras.data.model.PhotoModel" />
         <action
             android:id="@+id/action_imageFragment_to_imageListFragment"
             app:destination="@id/imageListFragment"

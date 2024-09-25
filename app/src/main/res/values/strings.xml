@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Surat</string>
+    <string name="app_name">Aras</string>
     <string name="camera_permission_needed">Camera Permission Needed</string>
     <string name="camera_permission_message">We need camera access to capture photos. Please enable it in settings.</string>
     <string name="go_to_settings">Go to Settings</string>

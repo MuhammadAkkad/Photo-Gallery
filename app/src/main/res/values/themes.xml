@@ -1,11 +1,11 @@
 <resources>
-    <style name="Base.Theme.Surat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.Aras" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">#0D47A1</item>
         <item name="colorPrimaryVariant">#0288D1</item>
         <item name="colorSecondary">#01579B</item>
         <item name="elevationOverlayColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="Theme.Surat" parent="Base.Theme.Surat">
+    <style name="Theme.Aras" parent="Base.Theme.Aras">
     </style>
 </resources>

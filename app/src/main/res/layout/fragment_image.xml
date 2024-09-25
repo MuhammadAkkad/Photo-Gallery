@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".presentation.image_detail.ImageFragment" />
 
-    <com.muhammed.surat.presentation.common.component.MetaDataComponent
+    <com.muhammed.aras.presentation.common.component.MetaDataComponent
         android:id="@+id/meta_data_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
