@@ -24,7 +24,6 @@ class HeaderComponent @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var filterModel = FilterModel()
     private var onFilter: ((FilterModel) -> Unit)? = null
     private var onSort: ((SortType) -> Unit)? = null
     private var _binding: HeaderComponentViewBinding? = null
@@ -46,13 +45,13 @@ class HeaderComponent @JvmOverloads constructor(
         }
         when {
             filter.query.isNullOrEmpty().not() || binding.rbKeyword.isChecked -> {
-                toggleDateIrSearchLayout(true)
+                toggleDateOrSearchLayout(true)
                 binding.rbKeyword.isChecked = true
                 binding.searchEditText.setText(filter.query)
             }
 
             (filter.dateRange?.first != null && filter.dateRange.second != null) || binding.rbDateRange.isChecked -> {
-                toggleDateIrSearchLayout(false)
+                toggleDateOrSearchLayout(false)
                 binding.rbDateRange.isChecked = true
                 binding.startDateEditText.setText(filter.dateRange?.first.toString())
                 binding.endDateEditText.setText(filter.dateRange?.second.toString())
@@ -77,13 +76,13 @@ class HeaderComponent @JvmOverloads constructor(
     private fun initListeners() {
         with(binding) {
             searchEditText.onSearch { text ->
-                onFilter?.invoke(filterModel.copy(query = text))
+                onFilter?.invoke(FilterModel(query = text))
             }
 
             btnClear.onClick {
                 startDateEditText.text?.clear()
                 endDateEditText.text?.clear()
-                onFilter?.invoke(filterModel.copy(dateRange = null, query = null))
+                onFilter?.invoke(FilterModel(dateRange = null, query = null))
             }
 
             startDateEditText.onClick {
@@ -97,26 +96,26 @@ class HeaderComponent @JvmOverloads constructor(
             startDateEditText.onTextEntered {
                 if (endDateEditText.text?.isNotEmpty() == true) {
                     val pair = getDatePair()
-                    onFilter?.invoke(filterModel.copy(dateRange = pair, query = null))
+                    onFilter?.invoke(FilterModel(dateRange = pair, query = null))
                 }
             }
 
             endDateEditText.onTextEntered {
                 if (startDateEditText.text?.isNotEmpty() == true) {
                     val pair = getDatePair()
-                    onFilter?.invoke(filterModel.copy(dateRange = pair, query = null))
+                    onFilter?.invoke(FilterModel(dateRange = pair, query = null))
                 }
             }
 
             rbDateRange.onClick {
-                toggleDateIrSearchLayout(false)
+                toggleDateOrSearchLayout(false)
                 rbKeyword.isChecked = false
                 searchEditText.text?.clear()
-                onFilter?.invoke(filterModel.copy(query = null))
+                onFilter?.invoke(FilterModel(query = null))
             }
 
             rbKeyword.onClick {
-                toggleDateIrSearchLayout(true)
+                toggleDateOrSearchLayout(true)
                 rbDateRange.isChecked = false
                 startDateEditText.text?.clear()
                 endDateEditText.text?.clear()
@@ -135,7 +134,7 @@ class HeaderComponent @JvmOverloads constructor(
         }
     }
 
-    private fun toggleDateIrSearchLayout(isSearchView: Boolean) {
+    private fun toggleDateOrSearchLayout(isSearchView: Boolean) {
         if (isSearchView) {
             binding.llDateFilterContainer.isVisible = false
             binding.SearchTextInputLayout.isVisible = true
